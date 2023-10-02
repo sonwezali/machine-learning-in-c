@@ -8,3 +8,7 @@ Source:
 
 I have no idea, but it is ok for me since I've been learning C.
 
+## First Week
+
+This is my first week of machine learning in C and this is how I speak.
+
