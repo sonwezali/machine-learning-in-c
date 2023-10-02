@@ -17,7 +17,7 @@ float rand_float()
 
 int main() 
 {
-    // srand(time(NULL));
+    //srand(time(0));
     srand(3); // kept as 3 for testing purposes
     // y = x*w;
     float w = rand_float() * 10;
