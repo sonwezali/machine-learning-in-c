@@ -40,14 +40,17 @@ int main()
     float eps = 1e-3;
     float rate = 1e-3;
 
-    printf("%f\n", costFunc(w, 0));
+    printf("%f\n", costFunc(w, b));
     for (size_t i = 0; i < 500; i++) {
-        float dCost = (costFunc(w + eps, 0) - costFunc(w, 0))/eps;
-        w -= rate*dCost; // Finite difference
-        printf("cost = %f, w = %f\n", costFunc(w, 0), w);
+        float c = costFunc(w, b);
+        float dw = (costFunc(w + eps, b) - c)/eps;
+        float db = (costFunc(w, b + eps) - c)/eps;
+        w -= rate*dw; // Finite difference
+        b -= rate*db;
+        printf("cost = %f, w = %f, b = %f\n", costFunc(w, b), w, b);
     }
     printf("---------------------------\n");
-    printf("w: %f\n", w);
+    printf("w: %f, b = %f\n", w, b);
 
     return 0;
 }
