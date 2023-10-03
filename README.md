@@ -6,7 +6,9 @@ Source:
 
 ## Why C for Machine Learning
 
-I have no idea, but it is ok for me since I've been learning C.
+I am interested in both C and Machine Learning. 
+I mean that I have been learning C for a while
+by being interested in it. Also, I have a great source.
 
 ## First Week
 
