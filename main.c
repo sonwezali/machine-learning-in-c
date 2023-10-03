@@ -10,23 +10,23 @@ float train[][2] = {
     {3, 6},
     {4, 8},
 };
-#define train_count (sizeof(train)/sizeof(train[0]))
+#define train_size (sizeof(train)/sizeof(train[0]))
 
 float rand_float()
 {
     return (float) rand() / (float) RAND_MAX;
 }
 
-float cost(float w)
+float costFunc(float w)
 {
     float result = 0.0f;
-    for (size_t i = 0; i < train_count; i++) {
+    for (size_t i = 0; i < train_size; i++) {
         float x = train[i][0];
         float y = x*w;
         float d = y - train[i][1];
         result += d*d;
     } 
-    result /= train_count;
+    result /= train_size;
     return result;
 }
 
@@ -37,7 +37,17 @@ int main()
     // y = x*w;
     float w = rand_float()*10;
 
-    printf("%f\n", cost(w));
+    float eps = 1e-3;
+    float rate = 1e-3;
+
+    printf("%f\n", costFunc(w));
+    for (size_t i = 0; i < 500; i++) {
+        float dCost = (costFunc(w + eps) - costFunc(w))/eps;
+        w -= rate*dCost; // Finite difference
+        printf("%f\n", costFunc(w));
+    }
+    printf("---------------------------\n");
+    printf("w: %f\n", w);
 
     return 0;
 }
