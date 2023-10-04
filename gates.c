@@ -1,7 +1,13 @@
+#include <math.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+float sigmoidf(float x)
+{
+    return 1.f/(1.f + expf(-x));
+}
 
 // OR-gate
 float train[][3] = {
@@ -18,7 +24,7 @@ float costFunc(float w1, float w2)
     for (size_t i = 0; i < train_size; i++) {
         float x1 = train[i][0];
         float x2 = train[i][1];
-        float y = x1*w1 + x2*w2;
+        float y = sigmoidf(x1*w1 + x2*w2);
         float d = y - train[i][2];
         result += d*d;
     } 
