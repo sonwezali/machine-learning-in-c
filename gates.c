@@ -57,7 +57,7 @@ int main()
         w2 -= rate*dw2;
         b  -= rate*db;
     }
-    printf("w1 = %f, w2 = %f, b = %f, c = %f\n", w1, w2, b, costFunc(w1, w2, b));
+    // printf("w1 = %f, w2 = %f, b = %f, c = %f\n", w1, w2, b, costFunc(w1, w2, b));
 
     for (size_t i = 0; i < 2; i++) {
         for (size_t j = 0; j < 2; j++) {
