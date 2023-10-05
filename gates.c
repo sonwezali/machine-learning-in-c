@@ -44,9 +44,9 @@ int main()
     float w2 = rand_float();
 
     float eps = 1e-3;
-    float rate = 1e-3;
+    float rate = 1e-2;
 
-    for (size_t i = 0; i < 4000; i++) {
+    for (size_t i = 0; i < 10; i++) {
         float c = costFunc(w1, w2);
         printf("w1 = %f, w2 = %f, c = %f\n", w1, w2, c);
         float dw1 = (costFunc(w1 + eps, w2) - costFunc(w1, w2))/eps;
