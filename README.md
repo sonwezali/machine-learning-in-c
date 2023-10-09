@@ -14,3 +14,5 @@ by being interested in it. Also, I have a great source.
 
 This is my first week of machine learning in C and this is how I speak.
 
+## Second Week
+
