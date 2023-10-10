@@ -9,14 +9,32 @@ float sigmoidf(float x)
     return 1.f/(1.f + expf(-x));
 }
 
-// AND-gate
-float train[][3] = {
+typedef float sample[3];
+
+// AND/OR/NAND-gate
+float and_train[][3] = {
     {0, 0, 0},
     {0, 1, 0},
     {1, 0, 0},
     {1, 1, 1},
 };
-#define train_size (sizeof(train)/sizeof(train[0]))
+
+float or_train[][3] = {
+    {0, 0, 0},
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+};
+
+float nand_train[][3] = {
+    {0, 0, 1},
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+};
+
+float (*train)[3] = nand_train;
+size_t train_size = 4;
 
 float costFunc(float w1, float w2, float b)
 {
@@ -35,6 +53,18 @@ float costFunc(float w1, float w2, float b)
 float rand_float()
 {
     return (float) rand() / (float) RAND_MAX;
+}
+
+int main2()
+{
+    // (x|y) & ~(x&y)
+    for (size_t x = 0; x < 2; x++) {
+        for (size_t y = 0; y < 2; y++) {
+            printf("%zu ^ %zu = %zu\n", x, y, ((x|y) & ~(x&y)));
+        }
+    }
+
+    return 0;
 }
 
 int main()
