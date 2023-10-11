@@ -78,10 +78,71 @@ void print_xor(Xor m)
     printf("AND:  w1: %f, w2: %f, b: %f\n", m.and_w1, m.and_w2, m.and_b);
 }
 
+Xor finite_diff(Xor m)
+{
+    Xor g; // gradient
+    float c = costFunc(m);
+    float saved;
+    float eps = 1e-3;
+
+    saved = m.or_w1;
+    m.or_w1 += eps;
+    g.or_w1 = (costFunc(m) - c)/eps;
+    m.or_w1 = saved; // m.or_w1 -= eps; would cause error accumulation since we r working w floats
+
+    saved = m.or_w2;
+    m.or_w2 += eps;
+    g.or_w2 = (costFunc(m) - c)/eps;
+    m.or_w2 = saved; 
+
+    saved = m.or_b;
+    m.or_b += eps;
+    g.or_b = (costFunc(m) - c)/eps;
+    m.or_b = saved; 
+
+    saved = m.nand_w1;
+    m.nand_w1 += eps;
+    g.nand_w1 = (costFunc(m) - c)/eps;
+    m.nand_w1 = saved; 
+
+    saved = m.nand_w2;
+    m.nand_w2 += eps;
+    g.nand_w2 = (costFunc(m) - c)/eps;
+    m.nand_w2 = saved; 
+
+    saved = m.nand_b;
+    m.nand_b += eps;
+    g.nand_b = (costFunc(m) - c)/eps;
+    m.nand_b = saved; 
+
+    saved = m.nand_b;
+    m.nand_b += eps;
+    g.nand_b = (costFunc(m) - c)/eps;
+    m.nand_b = saved; 
+
+    saved = m.and_w1;
+    m.and_w1 += eps;
+    g.and_w1 = (costFunc(m) - c)/eps;
+    m.and_w1 = saved; 
+
+    saved = m.and_w2;
+    m.and_w2 += eps;
+    g.and_w2 = (costFunc(m) - c)/eps;
+    m.and_w2 = saved; 
+
+    saved = m.and_b;
+    m.and_b += eps;
+    g.and_b = (costFunc(m) - c)/eps;
+    m.and_b = saved; 
+
+    return g;
+}
+
 int main()
 {
     Xor m = rand_xor();
     print_xor(m);
+    printf("cost = %f\n", costFunc(m));
 
     return 0;
 }
