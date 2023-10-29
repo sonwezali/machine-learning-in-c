@@ -30,6 +30,28 @@ float xor_train[][3] = {
     {1, 1, 0},
 };
 
+// AND/OR/NAND-gate
+float and_train[][3] = {
+    {0, 0, 0},
+    {0, 1, 0},
+    {1, 0, 0},
+    {1, 1, 1},
+};
+
+float or_train[][3] = {
+    {0, 0, 0},
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+};
+
+float nand_train[][3] = {
+    {0, 0, 1},
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+};
+
 float (*train)[3] = xor_train;
 size_t train_size = 4;
 
@@ -78,12 +100,29 @@ void print_xor(Xor m)
     printf("AND:  w1: %f, w2: %f, b: %f\n", m.and_w1, m.and_w2, m.and_b);
 }
 
+Xor learn(Xor m, Xor g, float rate)
+{
+    m.or_w1 -= rate*g.or_w1;
+    m.or_w2 -= rate*g.or_w2;
+    m.or_b -= rate*g.or_b;
+
+    m.nand_w1 -= rate*g.nand_w1;
+    m.nand_w2 -= rate*g.nand_w2;
+    m.nand_b -= rate*g.nand_b;
+
+    m.and_w1 -= rate*g.and_w1;
+    m.and_w2 -= rate*g.and_w2;
+    m.and_b -= rate*g.and_b;
+
+    return m;
+}
+
 Xor finite_diff(Xor m)
 {
     Xor g; // gradient
     float c = costFunc(m);
     float saved;
-    float eps = 1e-3;
+    float eps = 1e-1;
 
     saved = m.or_w1;
     m.or_w1 += eps;
@@ -142,7 +181,20 @@ int main()
 {
     Xor m = rand_xor();
 
-    finite_diff(m);
+    float rate = 1e-1;
+
+    for (size_t i = 0; i < 100*1000; i++) {
+        Xor g = finite_diff(m);
+        m = learn(m, g, rate);
+        printf("%f\n", costFunc(m));
+    }
+
+    printf("---------------------------------------------\n");
+    for (size_t i = 0; i < 2; i++) {
+        for (size_t j = 0; j < 2; j++) {
+            printf("%zu ^ %zu = %f\n", i, j, forward(m, i, j));
+        } 
+    }
 
     return 0;
 }
