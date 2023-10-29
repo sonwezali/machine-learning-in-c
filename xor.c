@@ -141,8 +141,8 @@ Xor finite_diff(Xor m)
 int main()
 {
     Xor m = rand_xor();
-    print_xor(m);
-    printf("cost = %f\n", costFunc(m));
+
+    finite_diff(m);
 
     return 0;
 }
